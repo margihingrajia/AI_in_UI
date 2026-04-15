@@ -1,0 +1,39 @@
+body {
+  font-family: Arial;
+  background-color: #f2f2f2;
+}
+
+/* Container issues */
+.container {
+  width: 80%;
+  margin: auto;
+  background: white;
+  padding: 5px; /* too cramped */
+}
+
+/* Bad nav */
+.nav span {
+  margin-right: 2px;
+  color: blue;
+  background: red;
+  padding: 2px;
+  font-size: 12px;
+}
+
+/* Task issues */
+.task {
+  margin: 0; /* no spacing */
+}
+
+/* Buttons */
+button {
+  background-color: red;
+  color: blue;
+  border: none;
+  margin: 2px;
+}
+
+/* Input */
+input {
+  font-size: 10px; /* too small */
+}

@@ -1,0 +1,20 @@
+{
+  "name": "ai_in_ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "vite.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/margihingrajia/AI_in_UI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/margihingrajia/AI_in_UI/issues"
+  },
+  "homepage": "https://github.com/margihingrajia/AI_in_UI#readme"
+}
