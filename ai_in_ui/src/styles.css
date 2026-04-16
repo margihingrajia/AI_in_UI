@@ -1,0 +1,76 @@
+/* Full page but poorly designed */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial;
+}
+
+/* Full screen container */
+.app {
+  height: 100vh;
+  width: 100vw;
+  background-color: #eeeeee;
+  overflow: scroll;
+
+  zoom: 1.5; 
+}
+
+/* Heading */
+h1 {
+  font-size: 18px; /* too small */
+  text-align: left;
+  margin: 5px;
+}
+
+/* Navigation */
+.nav {
+  background: red;
+  color: blue;
+  padding: 3px;
+  font-size: 12px;
+}
+
+.nav span {
+  margin-right: 5px;
+}
+
+/* Input section */
+.input-area {
+  margin: 5px;
+}
+
+/* Bad input */
+input {
+  font-size: 10px;
+  padding: 2px;
+}
+
+/* Bad buttons */
+button {
+  background-color: red;
+  color: blue;
+  border: none;
+  margin: 2px;
+  padding: 3px;
+  cursor: pointer;
+}
+
+/* List */
+.list {
+  margin: 5px;
+}
+
+/* Items */
+.item {
+  border: 1px solid #ccc;
+  margin: 2px; /* too tight */
+  padding: 2px;
+  display: block; /* no alignment */
+}
+
+/* Text */
+p {
+  margin: 0;
+  font-size: 12px;
+}
