@@ -1,50 +1,62 @@
 import { useState } from "react";
 
 export default function App() {
-  const [tasks, setTasks] = useState(["Task 1", "Task 2"]);
+  const [todos, setTodos] = useState([
+    "Do homework",
+    "Eat",
+    "Sleep",
+  ]);
   const [input, setInput] = useState("");
 
-  const add = () => {
+  const addTodo = () => {
     if (input !== "") {
-      setTasks([...tasks, input]);
+      setTodos([...todos, input]);
       setInput("");
-      alert("done"); // bad feedback
+      alert("added"); // bad feedback
     }
   };
 
+  const deleteTodo = (index) => {
+    const newTodos = todos.filter((_, i) => i !== index);
+    setTodos(newTodos);
+  };
+
   return (
-    <div className="container">
-      <h1>Dashboard</h1>
+    <div className="app">
+      <h1>To Do</h1>
 
       {/* Bad Navigation */}
       <div className="nav">
         <span>Home</span>
-        <span>Stuff</span>
-        <span>Other</span>
+        <span>Previous</span>
+        <span>Settings</span>
       </div>
 
-      <h2>Tasks</h2>
+      {/* Input Section */}
+      <div className="input-area">
+        <input
+          placeholder="Type something..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button onClick={addTodo}>Go</button>
+      </div>
 
-      {/* Task List */}
-      {tasks.map((t, i) => (
-        <div key={i} className="task">
-          <p>{t}</p>
-          <button onClick={() => alert("action")}>
-            {i % 2 === 0 ? "Do" : "Go"}
-          </button>
-        </div>
-      ))}
+      {/* Todo List */}
+      <div className="list">
+        {todos.map((todo, index) => (
+          <div key={index} className="item">
+            <p>{todo}</p>
 
-      <h3>Add</h3>
+            {/* Random inconsistent buttons */}
+            <button onClick={() => alert("doing")}>
+              {index % 2 === 0 ? "Do" : "Click"}
+            </button>
 
-      {/* Bad Form */}
-      <input
-        placeholder="Type here"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-
-      <button onClick={add}>Add</button>
+            <button onClick={() => deleteTodo(index)}>X</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

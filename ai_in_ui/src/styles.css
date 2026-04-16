@@ -1,39 +1,76 @@
-body {
+/* Full page but poorly designed */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: Arial;
-  background-color: #f2f2f2;
 }
 
-/* Container issues */
-.container {
-  width: 80%;
-  margin: auto;
-  background: white;
-  padding: 5px; /* too cramped */
+/* Full screen container */
+.app {
+  height: 100vh;
+  width: 100vw;
+  background-color: #eeeeee;
+  overflow: scroll;
+
+  zoom: 1.5; 
 }
 
-/* Bad nav */
-.nav span {
-  margin-right: 2px;
-  color: blue;
+/* Heading */
+h1 {
+  font-size: 18px; /* too small */
+  text-align: left;
+  margin: 5px;
+}
+
+/* Navigation */
+.nav {
   background: red;
-  padding: 2px;
+  color: blue;
+  padding: 3px;
   font-size: 12px;
 }
 
-/* Task issues */
-.task {
-  margin: 0; /* no spacing */
+.nav span {
+  margin-right: 5px;
 }
 
-/* Buttons */
+/* Input section */
+.input-area {
+  margin: 5px;
+}
+
+/* Bad input */
+input {
+  font-size: 10px;
+  padding: 2px;
+}
+
+/* Bad buttons */
 button {
   background-color: red;
   color: blue;
   border: none;
   margin: 2px;
+  padding: 3px;
+  cursor: pointer;
 }
 
-/* Input */
-input {
-  font-size: 10px; /* too small */
+/* List */
+.list {
+  margin: 5px;
+}
+
+/* Items */
+.item {
+  border: 1px solid #ccc;
+  margin: 2px; /* too tight */
+  padding: 2px;
+  display: block; /* no alignment */
+}
+
+/* Text */
+p {
+  margin: 0;
+  font-size: 12px;
 }
