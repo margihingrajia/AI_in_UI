@@ -1,175 +1,192 @@
-/* Base layout */
-.app {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 28px;
-  font-family: system-ui, sans-serif;
-  background: #f9fafb;
-  color: #1f2937;
+/* Base */
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: #f6f7fb;
+  color: #1a1a1a;
 }
 
-/* Title */
-.title {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 20px;
+/* App */
+.app {
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* Header */
+.header {
   text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.subtext {
+  font-size: 15px;
+  color: #555;
 }
 
 /* Navigation */
 .nav {
   display: flex;
   gap: 10px;
+  margin-bottom: 20px;
   justify-content: center;
-  margin-bottom: 24px;
 }
 
 .nav-btn {
-  background: #e5e7eb;
-  border: none;
   padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 15px;
+  border: none;
+  background: #e5e7eb;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-}
-
-.nav-btn:hover {
-  background: #d1d5db;
-}
-
-.nav-btn:focus-visible {
-  outline: 3px solid #6366f1;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
 .nav-btn.active {
-  background: #6366f1;
+  background: #2d7ff9;
   color: white;
 }
 
-/* Input area */
+/* Feedback */
+.feedback-area {
+  margin-bottom: 10px;
+}
+
+.toast {
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.toast.success {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+
+.toast.error {
+  background: #fdecea;
+  color: #d93025;
+}
+
+/* Input */
 .input-area {
   display: flex;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 input {
   flex: 1;
   padding: 12px;
   font-size: 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-input:focus-visible {
-  outline: 3px solid #6366f1;
+input:focus {
+  outline: 2px solid #2d7ff9;
+  border-color: transparent;
 }
 
 /* Buttons */
+button {
+  min-height: 40px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Hover + focus */
+button:hover {
+  opacity: 0.9;
+}
+
+button:focus {
+  outline: 2px solid #2d7ff9;
+  outline-offset: 2px;
+}
+
+/* Primary */
 .primary-btn {
-  background: #4f46e5;
+  background: #2d7ff9;
   color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.2s;
+  padding: 0 16px;
 }
 
-.primary-btn:hover {
-  background: #4338ca;
+.primary-btn:disabled {
+  background: #a0c3ff;
+  cursor: not-allowed;
 }
 
-.primary-btn:focus-visible {
-  outline: 3px solid #6366f1;
-}
-
+/* Secondary */
 .secondary-btn {
-  background: #e5e7eb;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
+  background: #e8f0ff;
+  color: #2d7ff9;
+  padding: 6px 10px;
 }
 
-.secondary-btn:hover {
-  background: #d1d5db;
+/* Danger */
+.danger-btn {
+  background: #ffe8e8;
+  color: #d93025;
+  padding: 6px 10px;
 }
 
-.secondary-btn:focus-visible {
-  outline: 3px solid #6366f1;
-}
-
-.delete-btn {
-  background: #ef4444;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.delete-btn:hover {
-  background: #dc2626;
-}
-
-.delete-btn:focus-visible {
-  outline: 3px solid #ef4444;
-}
-
-/* Feedback messages */
-.feedback {
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  font-size: 15px;
-  text-align: center;
-}
-
-.feedback.success {
-  background: #d1fae5;
-  color: #065f46;
-}
-
-.feedback.error {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-/* Empty state */
-.empty-state {
-  text-align: center;
-  padding: 20px;
-  color: #6b7280;
-  font-size: 16px;
-}
-
-/* Todo list */
+/* List */
 .list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
+/* Item */
 .item {
-  background: white;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  transition: box-shadow 0.2s;
 }
 
-.task-text {
+.item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Text */
+.todo-text {
   font-size: 16px;
 }
 
+/* Actions */
 .actions {
   display: flex;
   gap: 8px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+/* Settings */
+.settings {
+  text-align: center;
+  color: #777;
+  padding: 20px;
 }
