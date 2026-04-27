@@ -1,111 +1,125 @@
-/* Layout */
+/* Base */
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: #f6f7fb;
+  color: #222;
+}
+
+/* App layout */
 .app {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 24px;
-  font-family: system-ui, sans-serif;
-  background: #fafafa;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
 }
 
-/* Title */
-.title {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 16px;
+/* Header */
+.header {
   text-align: center;
-}
-
-/* Navigation */
-.nav {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
   margin-bottom: 20px;
 }
 
-.nav-btn {
-  background: #e5e7eb;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
+h1 {
+  margin: 0;
+  font-size: 28px;
 }
 
-/* Input area */
+.subtext {
+  margin-top: 6px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Toast feedback */
+.toast {
+  background: #2d7ff9;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Input section */
 .input-area {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 input {
   flex: 1;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #d1d5db;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ddd;
   border-radius: 6px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #2d7ff9;
 }
 
 /* Buttons */
-.primary-btn {
-  background: #6366f1;
-  color: white;
+button {
+  padding: 10px 12px;
+  border-radius: 6px;
   border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
   cursor: pointer;
-}
-
-.secondary-btn {
-  background: #e5e7eb;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.delete-btn {
-  background: #ef4444;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* Feedback message */
-.feedback {
-  background: #d1fae5;
-  color: #065f46;
-  padding: 8px;
-  border-radius: 6px;
-  margin-bottom: 16px;
-  text-align: center;
   font-size: 14px;
 }
 
-/* Todo list */
+/* Primary */
+.primary-btn {
+  background: #2d7ff9;
+  color: white;
+}
+
+/* Secondary */
+.secondary-btn {
+  background: #e8f0ff;
+  color: #2d7ff9;
+}
+
+/* Danger */
+.danger-btn {
+  background: #ffe8e8;
+  color: #d93025;
+}
+
+/* List */
 .list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* Item card */
 .item {
   background: white;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid #eee;
 }
 
-.task-text {
+/* Todo text */
+.todo-text {
   font-size: 15px;
 }
 
+/* Actions */
 .actions {
   display: flex;
-  gap: 6px;
+  gap: 8px;
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  color: #777;
+  padding: 20px;
 }
