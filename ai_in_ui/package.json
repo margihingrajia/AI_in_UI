@@ -4,10 +4,10 @@
   "description": "",
   "main": "vite.config.js",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview"
-},
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/margihingrajia/AI_in_UI.git"
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/margihingrajia/AI_in_UI/issues"
   },
-  "homepage": "https://github.com/margihingrajia/AI_in_UI#readme"
+  "homepage": "https://github.com/margihingrajia/AI_in_UI#readme",
+  "devDependencies": {
+    "vite": "^8.0.10"
+  }
 }
