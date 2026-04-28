@@ -1,194 +1,247 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 
 export default function App() {
   const [todos, setTodos] = useState([
-    { text: "Do homework", completed: false },
-    { text: "Eat", completed: false },
-    { text: "Sleep", completed: false },
+    { id: 1, text: "Do homework", completed: false },
+    { id: 2, text: "Eat", completed: false },
+    { id: 3, text: "Sleep", completed: false },
   ]);
 
   const [input, setInput] = useState("");
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({ type: "", text: "" });
   const [lastDeleted, setLastDeleted] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [editValue, setEditValue] = useState("");
 
-  const inputRef = useRef(null);
+  // Auto-clear feedback
+  useEffect(() => {
+    if (!message.text) return;
+    const timer = setTimeout(() => setMessage({ type: "", text: "" }), 2500);
+    return () => clearTimeout(timer);
+  }, [message]);
 
-  const showMessage = (text) => {
-    setMessage(text);
-    setTimeout(() => setMessage(""), 2500);
-  };
+  // Auto-clear undo
+  useEffect(() => {
+    if (!lastDeleted) return;
+    const timer = setTimeout(() => setLastDeleted(null), 5000);
+    return () => clearTimeout(timer);
+  }, [lastDeleted]);
 
-  // Add Task
+  const showMessage = (type, text) => setMessage({ type, text });
+
   const addTodo = () => {
-    if (!input.trim()) return;
-
-    setTodos([...todos, { text: input.trim(), completed: false }]);
+    const trimmed = input.trim();
+    if (!trimmed) {
+      showMessage("error", "Task cannot be empty.");
+      return;
+    }
+    const newTodo = {
+      id: Date.now(),
+      text: trimmed,
+      completed: false,
+    };
+    setTodos((prev) => [...prev, newTodo]);
     setInput("");
-    showMessage("Task added");
-    inputRef.current.focus();
+    showMessage("success", "Task added!");
   };
 
-  // Delete Task + Undo
-  const deleteTodo = (index) => {
-    setLastDeleted({ item: todos[index], index });
-
-    setTodos(todos.filter((_, i) => i !== index));
-    showMessage("Task deleted");
+  const deleteTodo = (id) => {
+    const removed = todos.find((t) => t.id === id);
+    setTodos((prev) => prev.filter((t) => t.id !== id));
+    setLastDeleted(removed);
+    showMessage("success", "Task deleted.");
   };
 
   const undoDelete = () => {
     if (!lastDeleted) return;
-
-    const updated = [...todos];
-    updated.splice(lastDeleted.index, 0, lastDeleted.item);
-    setTodos(updated);
+    setTodos((prev) => [...prev, lastDeleted]);
     setLastDeleted(null);
-    showMessage("Undo successful");
+    showMessage("success", "Task restored.");
   };
 
-  // Complete Task
-  const toggleComplete = (index) => {
-    const updated = [...todos];
-    updated[index].completed = !updated[index].completed;
-    setTodos(updated);
+  const toggleComplete = (id) => {
+    setTodos((prev) =>
+      prev.map((t) =>
+        t.id === id ? { ...t, completed: !t.completed } : t
+      )
+    );
   };
 
-  // Edit Task
-  const startEdit = (index) => {
-    setEditingIndex(index);
-    setInput(todos[index].text);
-    inputRef.current.focus();
+  const startEdit = (todo) => {
+    setEditingId(todo.id);
+    setEditValue(todo.text);
   };
 
-  const saveEdit = () => {
-    if (!input.trim()) return;
+  const saveEdit = (id) => {
+    const trimmed = editValue.trim();
+    if (!trimmed) {
+      showMessage("error", "Task cannot be empty.");
+      return;
+    }
+    setTodos((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, text: trimmed } : t))
+    );
+    setEditingId(null);
+    setEditValue("");
+    showMessage("success", "Task updated.");
+  };
 
-    const updated = [...todos];
-    updated[editingIndex].text = input.trim();
-
-    setTodos(updated);
-    setEditingIndex(null);
-    setInput("");
-    showMessage("Task updated");
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditValue("");
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center px-4 py-10">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-xl">
 
-        {/* Header */}
-        <header className="mb-8 text-center">
-          <h1 className="text-3xl font-semibold text-gray-900">
-            Task Manager
-          </h1>
-          <p className="text-gray-500 mt-1">
-            Stay organized and get things done
-          </p>
-        </header>
+        {/* App Shell */}
+        <div className="bg-white shadow-xl rounded-2xl border border-gray-200 overflow-hidden">
 
-        {/* Feedback */}
-        {message && (
-          <div className="mb-4 text-sm text-center text-blue-600 bg-blue-50 py-2 rounded-lg transition">
-            {message}
-          </div>
-        )}
-
-        {/* Undo */}
-        {lastDeleted && (
-          <div className="mb-4 flex justify-between items-center bg-yellow-50 text-yellow-800 px-4 py-2 rounded-lg">
-            <span>Task deleted</span>
-            <button
-              onClick={undoDelete}
-              className="text-sm font-medium hover:underline"
-            >
-              Undo
-            </button>
-          </div>
-        )}
-
-        {/* Input */}
-        <div className="flex gap-2 mb-6">
-          <input
-            ref={inputRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) =>
-              e.key === "Enter"
-                ? editingIndex !== null
-                  ? saveEdit()
-                  : addTodo()
-                : null
-            }
-            placeholder="Add a new task..."
-            className="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-          />
-
-          <button
-            onClick={editingIndex !== null ? saveEdit : addTodo}
-            className="px-5 py-3 bg-blue-600 text-white rounded-xl text-sm font-medium hover:bg-blue-700 active:scale-95 transition"
-          >
-            {editingIndex !== null ? "Save" : "Add"}
-          </button>
-        </div>
-
-        {/* Empty State */}
-        {todos.length === 0 && (
-          <div className="text-center text-gray-400 py-10">
-            No tasks yet. Add one above 👆
-          </div>
-        )}
-
-        {/* Task List */}
-        <div className="space-y-3">
-          {todos.map((todo, index) => (
-            <div
-              key={index}
-              className="bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between shadow-sm hover:shadow-md transition"
-            >
-              {/* Left */}
-              <div className="flex items-center gap-3">
-
-                {/* Checkbox */}
-                <input
-                  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => toggleComplete(index)}
-                  className="w-5 h-5 accent-blue-600 cursor-pointer"
-                />
-
-                {/* Text */}
-                <span
-                  className={`text-sm ${
-                    todo.completed
-                      ? "line-through text-gray-400"
-                      : "text-gray-800"
-                  }`}
-                >
-                  {todo.text}
-                </span>
-              </div>
-
-              {/* Actions */}
-              <div className="flex items-center gap-2">
-
-                <button
-                  onClick={() => startEdit(index)}
-                  className="text-xs text-gray-500 hover:text-blue-600 transition"
-                >
-                  Edit
-                </button>
-
-                <button
-                  onClick={() => deleteTodo(index)}
-                  className="text-xs text-gray-500 hover:text-red-600 transition"
-                >
-                  Delete
-                </button>
-              </div>
+          {/* Header */}
+          <header className="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Tasks</h1>
+              <p className="text-sm text-gray-500">Organize your day with clarity.</p>
             </div>
-          ))}
+
+            <nav className="flex gap-2">
+              <button className="nav-btn-active">Home</button>
+              <button className="nav-btn">History</button>
+              <button className="nav-btn">Settings</button>
+            </nav>
+          </header>
+
+          {/* Input */}
+          <section className="px-6 pt-5 pb-3 border-b border-gray-200">
+            <div className="flex gap-3">
+              <input
+                aria-label="Add a new task"
+                placeholder="Add a new task..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className="input"
+              />
+              <button onClick={addTodo} className="btn-primary">
+                Add Task
+              </button>
+            </div>
+
+            {message.text && (
+              <div
+                className={`feedback ${
+                  message.type === "error" ? "feedback-error" : "feedback-success"
+                }`}
+              >
+                {message.text}
+              </div>
+            )}
+          </section>
+
+          {/* Undo */}
+          {lastDeleted && (
+            <div className="undo-bar">
+              <span>Task “{lastDeleted.text}” deleted.</span>
+              <button onClick={undoDelete} className="undo-btn">Undo</button>
+            </div>
+          )}
+
+          {/* Task List */}
+          <main className="px-6 py-5">
+            {todos.length === 0 ? (
+              <div className="empty-state">
+                <p className="font-medium text-gray-700">No tasks yet</p>
+                <p className="text-sm text-gray-500">Add your first task to begin.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {todos.map((todo) => {
+                  const editing = editingId === todo.id;
+
+                  return (
+                    <div
+                      key={todo.id}
+                      className="task-card group"
+                    >
+                      <div className="flex items-start gap-3 flex-1">
+
+                        {/* Completion toggle */}
+                        <button
+                          onClick={() => toggleComplete(todo.id)}
+                          className={`check-btn ${
+                            todo.completed ? "check-btn-active" : ""
+                          }`}
+                        >
+                          ✓
+                        </button>
+
+                        {/* Text / Edit */}
+                        <div className="flex-1">
+                          {editing ? (
+                            <div className="flex flex-col gap-2">
+                              <input
+                                value={editValue}
+                                onChange={(e) => setEditValue(e.target.value)}
+                                className="input-sm"
+                              />
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => saveEdit(todo.id)}
+                                  className="btn-primary-sm"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={cancelEdit}
+                                  className="btn-secondary-sm"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              <p
+                                className={`text-sm font-medium ${
+                                  todo.completed
+                                    ? "line-through text-gray-400"
+                                    : "text-gray-900"
+                                }`}
+                              >
+                                {todo.text}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                {todo.completed ? "Completed" : "Tap to mark complete"}
+                              </p>
+                            </>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      {!editing && (
+                        <div className="flex items-center gap-2 ml-3">
+                          <button
+                            onClick={() => startEdit(todo)}
+                            className="btn-secondary-sm"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => deleteTodo(todo.id)}
+                            className="btn-danger-sm"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </main>
         </div>
       </div>
     </div>
