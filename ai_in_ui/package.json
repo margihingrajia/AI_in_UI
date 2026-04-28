@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/margihingrajia/AI_in_UI#readme",
   "devDependencies": {
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.12",
+    "tailwindcss": "^3.4.19",
     "vite": "^8.0.10"
   }
 }
